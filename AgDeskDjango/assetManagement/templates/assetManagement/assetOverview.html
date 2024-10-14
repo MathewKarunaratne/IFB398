@@ -1,0 +1,141 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block webpageContent %} 
+{% load crispy_forms_tags %}
+
+<!-- Import Stylesheet -->
+<link rel="stylesheet" href="{% static 'tableStyling.css' %}">
+
+
+<!-- Header -->
+<h2> {{ assetLabel }} </h2>
+<!-- "Add asset" button opens modal form to put in asset details -->
+<div style="width: 100%;">
+    <button class="btn custom-button" style="float: right;" data-bs-toggle="modal" data-bs-target="#newAsset">New Asset</button>
+</div>
+<br>
+
+{% if messages %}
+    {% for message in messages %}
+    <div class="alert {{ message.tags }}" role="alert">
+        {{ message }}
+    </div>
+    {% endfor %}
+{% endif %}
+
+
+<!-- Modal which conditionally appears when the user selects terms and conditions -->
+<div class="modal fade" id="newAsset" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title" id="modalTitle">New Asset</h4>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">           
+                <div class="container">
+                    <form method="POST" enctype="multipart/form-data">
+                        {% csrf_token %}
+                        
+                        {{ assetForm.as_p }}
+                        
+                        {{ partFormSet.management_form }}
+                        {% for form in partFormSet %}
+                            {{ form.as_p }}
+                        {% endfor %}
+                        
+                        <button type="submit">Create Asset</button>
+                    </form>
+                    
+                    
+                </div>
+            </div>
+        </div>
+    </div>
+</div> 
+
+
+<!-- Check Out Modal -->
+<div class="modal fade" id="checkout" tabindex="-1" role="dialog" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- Header -->
+            <div class="modal-header">
+                <h4 class="modal-title" id="modalTitle">Check Out</h4>
+            </div>
+            <!-- Body -->
+            <div class="modal-body">
+                <div class="container">
+                    <form method="post" action="/operations/checkout" enctype="multipart/form-data" id="form-container">
+                        {% csrf_token %}
+                        <input type="hidden" name="assetID" id="id_assetID" value="0">
+                        <div class="mb-3">
+                            {{ checkoutForm.location.label }}
+                            {{ checkoutForm.location }}
+                        </div>
+                        <div class="mb-3">
+                            {{ checkoutForm.notes.label }}
+                            {{ checkoutForm.notes }}
+                        </div>
+                        <!-- Footer -->
+                        <div style="width: 100%;">
+                            <button type="button" class="btn btn-secondary" style="float: left;" data-bs-dismiss="modal">Close</button>
+                            <button type="submit" class="btn custom-button" style="float: right;" name="checkout">Confirm</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- Table that displays assets from the assetList (displayAssets view) -->
+<table class="table table-hover">
+    <thead>
+        <tr>
+            <th scope="col">Asset Name</th>
+            <th scope="col">Manufacturer</th>
+            {% if assetCategory == 'LV' or assetCategory == 'HV' %}
+                <th scope="col">Registration</th>
+            {% elif assetCategory == 'SE' %}
+                <th scope="col">Serial Number</th>
+            {% else %}
+                <th scope="col">VIN Number</th>
+            {% endif %}
+            <th scope="col">Location</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+    {% for asset in assetList %}
+        <tr class="userRowHeight"> <!-- Should be possible to add the href to the <tr> rather than every <td>.
+                                        This will make clicking the row more consistent and the code more concise,
+                                        but I don't know if there'll be an issue with the checkout button. -->
+            <td><a class="asset_detail" href="{% url 'assetDetails' assetCategory=assetCategory assetID=asset.assetID %}">{{ asset.assetName }}</a></td>
+            <td><a class="asset_detail" href="{% url 'assetDetails' assetCategory=assetCategory assetID=asset.assetID %}">{{ asset.Manufacturer }}</a></td>
+            {% if assetCategory == 'LV' or assetCategory == 'HV' %}
+                <td><a class="asset_detail" href="{% url 'assetDetails' assetCategory=assetCategory assetID=asset.assetID %}">{{ asset.Registration }}</a></td>
+            {% elif assetCategory == 'SE' %}
+                <td><a class="asset_detail" href="{% url 'assetDetails' assetCategory=assetCategory assetID=asset.assetID %}">{{ asset.serialNumber }}</a></td>
+            {% else %}
+            <td><a class="asset_detail" href="{% url 'assetDetails' assetCategory=assetCategory assetID=asset.assetID %}">{{ asset.vin }}</a></td>
+            {% endif %}
+            <td><a class="asset_detail" href="{% url 'assetDetails' assetCategory=assetCategory assetID=asset.assetID %}">{{ asset.Location }}</a></td>
+            <td style="display: flex; justify-content: right;">
+                <a href="{% url 'assetDetails' assetCategory=assetCategory assetID=asset.assetID %}"><img style="max-width:33px; max-height:33px; margin-right: 10px;" src="{% static 'Images/editIcon.png' %}"></a>
+           
+            {% if asset.opStatus %}
+                <p>Unavailable</p> </td>
+            {% else %}
+                    <button data-bs-toggle="modal" class="btn custom-button" data-bs-target="#checkout"
+                    onclick="document.getElementById('id_assetID').setAttribute('value', '{{ asset.assetID }}')"
+                    >Check Out</button>
+                </td>
+            {% endif %}
+        </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

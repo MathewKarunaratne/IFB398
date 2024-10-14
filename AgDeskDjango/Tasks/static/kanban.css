@@ -1,0 +1,22 @@
+.card.draggable {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    cursor: grab;
+}
+
+.dropsone {
+    min-height: 2px;
+    max-height: 2px;
+    margin-bottom: 1rem;
+}
+
+.droppable-hint {
+    min-height: 10px;
+    max-height: 20px;
+    background-color: #ededed;
+}
+
+.droppable {
+    background-color: #90ee90;
+    min-height: 120px;
+}

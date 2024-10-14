@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% block webpageContent %}
+
+<head>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> <!-- This should *not* be needed -->
+    <link rel="stylesheet" href="/static/tasks.css">
+    <link rel="stylesheet" href="/static/kanban.css">
+    <script src="/static/kanban.js"></script>
+    <div id="csrf-hiding-spot" hidden>{% csrf_token %}</div>
+    <div id="starting-data" hidden data-cards-data="{{ CardInfoList }}"></div>
+</head>
+
+<!-- Template for the task cards -->
+<template id="task-card-template">
+    <div class="card draggable shadow-sm dropzone-location" id="card_taskID" data-task-id="taskID"
+        draggable="true" ondragstart="drag(event)" ondragend="dragEnd()">
+        <div class="card-body p-2">
+            <div class="card-title">
+                <h6 class="task-name">taskName</h6>
+            </div>
+            <p class="task-desc">taskDesc</p>
+            <button type="button" class="btn btn-danger remove-card-btn" style="float: right;" onclick="removeCard()">X</button>
+        </div>
+    </div>
+    <div class="dropzone rounded" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="clearDrop(event)"></div>
+</template>
+
+<!-- Add Task Modal -->
+<div class="modal fade" id="add-task-modal" tabindex="-1" aria-labelledby="modalTitle" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content" style="visibility: visible;">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalTitle">Add Task</h5> <!-- Which type of header? -->
+            </div>
+            <div class="modal-body">
+                {% if UTasks %}
+                <select id="add-task-select">
+                    <!-- Very unsafe (and inelegant), will need refactoring -->
+                    {% for task in UTasks %}
+                    <option id="add-task-option-{{task.taskID}}"
+                        value="{{task.status}}, -1, {{task.taskID}}, '{{task.name}}', '{{task.description}}', '{{task.assignedTo}}'">
+                        {{ task.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+                {% else %}
+                <p>No tasks</p>
+                {% endif %}
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                {% if UTasks %}
+                <button class="btn custom-button" type="submit" id="add-task-btn">Add</button>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<body>
+    <!-- Head -->
+    <div style="width: 100%;">
+        <h3>{{ Name }}</h3> <!--style="float: left;" -->
+        <a class="btn custom-button" id="back-btn" style="float: left;" href="{% url 'kanbanTable' %}">Back</a>
+        <button class="btn custom-button" id="save-board-btn" style="float: right;">Save Changes</button>
+        <button class="btn custom-button" id="add-task-modal-btn" style="float: right;">Add Task</button>
+    </div>
+    <!-- Body -->
+    <div class="container-fluid pt-3" style="width: 100%;">
+        <div class="row flex-row flex-sm-nowrap py-3" id="buckets-container">
+            <!-- Buckets -->
+            {% for bucketName in BucketNames %}
+            <div class="col flex-col">
+                <div class="card bg-light">
+                    <div class="card-body">
+                        <h6 class="card-title text-uppercase text-truncate py-2">{{ bucketName }}</h6>
+                        <div class="items border border-light bucket-container">
+                            <div class="dropzone-location"></div>
+                            <div class="dropzone rounded" ondrop="drop(event)" ondragover="allowDrop(event)" ondragleave="clearDrop(event)"></div>
+                            <!-- Cards -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+
+{% endblock %}

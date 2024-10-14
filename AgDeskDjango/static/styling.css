@@ -1,0 +1,254 @@
+/* Full Page */
+
+#topOfPage {
+    max-width: 100%;
+    margin: 0px;
+}
+
+#topOfPage .col {
+    width: 100%;
+    padding: 0px;
+}
+
+#bottomOfPage {
+    min-height:  calc(100vh - 83px);
+    margin-top: 83px;
+    overflow-x:hidden;
+
+}
+
+/* Top Menu Navigation */
+
+#topNavBar{
+    padding-right: 25px;
+    background-color: #124559;
+
+}
+
+#logoContainer {
+    padding: 0px;
+    margin: 0px;
+}
+
+#logo{
+    width: 40px;
+    margin: 10px;
+}
+
+#topNavBar .navbar-brand {
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 30px;
+    font-weight: bold;
+    padding-left: 5px;
+}
+
+#search {
+    width: 20px !important;
+    margin: 0px !important;
+}
+
+#navUtil img {
+    width: 30px;
+    margin: 10px;
+}
+
+
+#searchbutton {
+    margin-right: 10px;
+}
+
+
+/* Side Menu Navigation */
+#sidebar-column{
+    background-color: #124559;
+    width:4rem;
+    height: 100vh;
+    padding-left: 15px;
+    padding-right: 15px;
+    position: fixed;
+    z-index: 2000;
+}
+
+#sidebar-menu-top {
+    align-items: center;
+}
+
+#sidebar-menu-top ul {
+    padding: 0px;
+
+}
+
+#sidebar-menu-bottom {
+    position: fixed;
+    bottom: 0;
+}
+#sidebar-menu-bottom ul {
+    padding: 0px;
+}
+
+
+#sidebar-icons {
+    padding: 0px;
+    width: 100%;
+}
+
+#sidebar-icons:hover {
+    background-color: #196482;
+
+}
+#sidebar-icons img {
+    width: 30px;
+    margin: 0px;
+}
+
+#sidebar-column li {
+    width: 64px;
+    height: 62px;
+}
+
+
+#dropdownNavIcon {
+    width: 30px; 
+    padding: 0px;
+}
+
+#dropdownNav:hover{
+    background-color: #196482;
+}
+
+#dropdownNav {
+    width:100%;
+    height: 100%;
+
+}
+
+#dropdownNav a{
+    display: block;
+    padding: 16px;
+    position:inherit;
+}
+
+#dropdownItem li{
+    width:100%;
+    height:100%;
+    text-align: left;
+}
+
+#dropdownItem a{
+    color: #212529;
+    text-decoration: none;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+#dropdownItem li:hover{
+    background-color: #f8f9fa;
+}
+
+#settingsIcon {
+    width: 30px; 
+    padding: 0px;
+}
+
+#settings:hover{
+    background-color: #196482;
+}
+
+#settings a{
+    display: block;
+    padding: 16px;
+    position:inherit;
+}
+
+#settingsDropdown li{
+    width:100%;
+    height:100%;
+    text-align: left;
+}
+
+#settingsDropdown a{
+    color: #212529;
+    text-decoration: none;
+    padding-top: 4px;
+    padding-bottom: 4px;
+    padding-left: 16px;
+    padding-right: 16px;
+}
+
+#settingsDropdown li:hover{
+    background-color: #f8f9fa;
+}
+
+/* Central Page */
+#CentralPage {
+    margin-top: 35px;
+    margin-bottom: 35px;
+    margin-left: 110px;
+    margin-right: 45px;
+    width: calc(100vw - 170px);
+    overflow-x:hidden;
+    overflow-y: auto;
+    padding-left: 10px;
+}
+
+
+#username {
+    padding-left: 16px;
+    padding-right:16px;
+    padding-top:4px;
+    padding-bottom:4px;
+}
+
+
+.custom-button { 
+    color: white; 
+    background-color: #598392; 
+    border-color: #598392; 
+    max-width: max-content; 
+} 
+
+.custom-button:hover { 
+    color: white; 
+    background-color: #749BAA; 
+    border-color: #749BAA; 
+} 
+
+.same-height-card {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+}
+
+.card-img-top {
+    width: 100%;
+    height: 10vw;
+    object-fit: cover;
+}
+.gridster .gs-w{
+    z-index: 1;
+}
+
+
+.widget-delete-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    cursor: pointer;
+    font-size: 18px;
+    color: #ff0000;
+    background-color: #ffffff;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    text-align: center;
+    line-height: 20px;
+    z-index: 2;
+}
+
+.widget-delete-btn:hover {
+    background-color: #ff0000;
+    color: #ffffff;
+}

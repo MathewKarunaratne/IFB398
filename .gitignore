@@ -1,0 +1,11 @@
+.env
+./AgDeskDjango/.env/
+./AgDeskDjango/.env
+./venv/
+./Sem/
+__pycache__/
+db.sqlite3
+AgDeskDjango/AgDeskDjango/local_settings.py
+AgDeskDjango/utils/databaseConfig.py
+.vscode/
+/AgDeskDjango/media/**/*.*

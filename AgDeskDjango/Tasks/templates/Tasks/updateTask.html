@@ -1,0 +1,43 @@
+{% extends 'base.html' %}
+{% block webpageContent %}
+
+<form method="post">
+    <div style="width: 50%;">
+        <div class="mb-3">
+            <h2>Update Task</h2>
+        </div>
+        {% csrf_token %}
+        <div class="mb-3">
+            {{updateForm.name.label}}
+            {{updateForm.name}}
+        </div>
+        <div class="mb-3">
+            {{updateForm.description.label}}
+            {{updateForm.description}}
+        </div>
+        <div class="mb-3">
+            {{updateForm.status.label}}
+            {{updateForm.status}}
+        </div>
+        <div class="mb-3">
+            {{updateForm.priority.label}}
+            {{updateForm.priority}}
+        </div>
+        <div class="mb-3">
+            {{updateForm.assignedTo.label}}
+            {{updateForm.assignedTo}}
+        </div>
+        <div class="mb-3">
+            {{updateForm.dueDate.label}}
+            {{updateForm.dueDate}}
+        </div>
+        <div id="updateTaskFooter"class="modal-footer" style="display: flex; justify-content: space-between;">
+            <form>
+                <button type="submit" class="btn custom-button" name="deleteTaskForm">Delete Task</button>
+            </form>
+            <button type="submit" class="btn custom-button" name="amendTaskForm">Update Task</button>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
